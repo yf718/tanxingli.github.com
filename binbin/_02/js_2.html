@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<h3>污染城市列表</h3>
+<ul id="aqi-list">
+    <!--
+        <li>第一名：福州（样例），10</li>
+          <li>第二名：福州（样例），10</li> -->
+</ul>
+
+
+
+<script>
+
+var aqiData = [
+    ["北京", 90],
+    ["上海", 50],
+    ["福州", 10],
+    ["广州", 50],
+    ["成都", 90],
+    ["西安", 100]
+];
+(function () {
+  maopao();
+    var html='';
+    for(var j=0;j<aqiData.length;j++){
+        if(aqiData[j][1]>60){
+            html+='<li>'+"第"+(j+1)+"名"+aqiData[j][0]+'</li>';
+        }
+
+    }
+     document.getElementById('aqi-list').innerHTML=html;
+})();
+function maopao(){
+
+    var temp;
+
+    for(var i=0;i<aqiData.length;i++){
+
+        for(var j=0;j<aqiData.length-i-1;j++){
+
+            if(aqiData[j][1]<aqiData[j+1][1]){
+                temp=aqiData[j];
+                aqiData[j]=aqiData[j+1];
+                aqiData[j+1]=temp;
+            }
+        }
+    };
+    return aqiData;
+}
+
+</script>
+</body>
+</html>
