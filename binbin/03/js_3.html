@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<ul id="source">
+    <li>北京空气质量：<b>90</b></li>
+    <li>上海空气质量：<b>70</b></li>
+    <li>天津空气质量：<b>80</b></li>
+    <li>广州空气质量：<b>50</b></li>
+    <li>深圳空气质量：<b>40</b></li>
+    <li>福州空气质量：<b>32</b></li>
+    <li>成都空气质量：<b>90</b></li>
+</ul>
+
+<ul id="resort">
+    <!--
+    <li>第一名：北京空气质量：<b>90</b></li>
+    <li>第二名：北京空气质量：<b>90</b></li>
+    <li>第三名：北京空气质量：<b>90</b></li>
+     -->
+
+</ul>
+
+<button id="sort-btn">排序</button>
+
+<script>
+
+    /**
+     * getData方法
+     * 读取id为source的列表，获取其中城市名字及城市对应的空气质量
+     * 返回一个数组，格式见函数中示例
+     */
+    var data=[];
+    function getData() {
+        var li=document.getElementsByTagName('li');
+        for(var i=0;i<li.length;i++){
+            data.push(li[i].innerText.split('，'));
+        }
+            var sz=[];
+        for(var i=0;i<data.length;i++){
+            var sz1=[];
+            sz1[0]=data[i][0].split('：')[0];
+            sz1[1]=data[i][0].split('：')[1]
+            sz[i]=sz1;
+        }
+
+      return sz;
+
+    }
+
+    /**
+     * sortAqiData
+     * 按空气质量对data进行从小到大的排序
+     * 返回一个排序后的数组
+     */
+    function sortAqiData(sz) {
+
+        var temp;
+
+        for(var i=0;i<sz.length;i++){
+
+            for(var j=0;j<sz.length-i-1;j++){
+
+                if(sz[j][1]<sz[j+1][1]){
+                    temp=sz[j];
+                    sz[j]=sz[j+1];
+                    sz[j+1]=temp;
+                }
+            }
+        };
+        return sz;
+
+    }
+
+    /**
+     * render
+     * 将排好序的城市及空气质量指数，输出显示到id位resort的列表中
+     * 格式见ul中的注释的部分
+     */
+    function render(sz) {
+        var html='';
+   for(var j=0;j<sz.length;j++){
+
+           html+='<li>'+"第"+(j+1)+"名"+sz[j][0]+sz[j][1]+'</li>';
+
+  }
+   document.getElementById('resort').innerHTML=html;
+
+    }
+
+    function btnHandle() {
+        var aqiData = getData();
+        aqiData = sortAqiData(aqiData);
+        render(aqiData);
+    }
+
+    function init() {
+
+                document.getElementById('sort-btn').addEventListener('click',function(){
+            btnHandle();
+                    })
+
+    }
+
+    init();
+
+
+</script>
+</body>
+</html>
